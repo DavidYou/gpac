@@ -3499,8 +3499,9 @@ static GF_Err gf_mpd_write_m3u8_playlist(const GF_MPD *mpd, const GF_MPD_Period 
 	gf_fprintf(out,"#EXT-X-TARGETDURATION:%d\n", (u32) ((Double) rep->dash_dur.num) / rep->dash_dur.den);
 	gf_fprintf(out,"#EXT-X-VERSION:%d\n", hls_version);
 	gf_fprintf(out,"#EXT-X-MEDIA-SEQUENCE:%d\n", sctx->seg_num);
+	gf_fprintf(out,"#EXT-X-SERVER-CONTROL:CAN-SKIP-UNTIL=%d,PART-HOLD-BACK=%g\n", (u32) ((Double) rep->dash_dur.num) / rep->dash_dur.den * 6, as->hls_ll_frag_dur * 3);
 	if (as->use_hls_ll) {
-		gf_fprintf(out,"#EXT-X-PART-INF:PART-TARGET=%g\n", as->hls_ll_frag_dur);
+		gf_fprintf(out,"#EXT-X-PART-INF:PART-TARGET=%g\n", as->hls_ll_frag_dur * 1.1);
 	}
 	for (i=0; i<rep->nb_hls_variant_tags; i++) {
 		gf_fprintf(out,"%s\n", rep->hls_variant_tags[i]);
